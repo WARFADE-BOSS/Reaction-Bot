@@ -15,7 +15,7 @@ def react_to_message(update, context):
         reaction = random.choice(reactions)
         bot.send_reaction(chat_id, message_id, reaction)
 
-updater = Updater(bot=bot, update_queue=None)
+updater = Updater(bot=bot, use_context=True)
 dispatcher = updater.dispatcher
 dispatcher.add_handler(telegram.MessageHandler(telegram.Filters.all, react_to_message))
 
