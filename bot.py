@@ -1,5 +1,6 @@
 import os
 import telegram
+from telegram.ext import Updater
 import random
 
 BOT_TOKEN = os.environ['BOT_TOKEN']
