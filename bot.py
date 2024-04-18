@@ -1,13 +1,13 @@
 import os
 import telegram
-from telegram.ext import Updater, Queue
+from telegram.ext import Updater
 import random
 
 BOT_TOKEN = os.environ['BOT_TOKEN']
 
 reactions = ['👍', '👎', '😂', '🎉', '🤔']
 
-bot = telegram.Bot(BOT_TOKEN)
+bot = telegram.Bot(token=BOT_TOKEN)
 
 def react_to_message(update, context):
     if update.message:
@@ -16,8 +16,7 @@ def react_to_message(update, context):
         reaction = random.choice(reactions)
         bot.send_reaction(chat_id, message_id, reaction)
 
-update_queue = Queue()
-updater = Updater(bot=bot, update_queue=update_queue)
+updater = Updater(bot=bot, update_queue=None)
 dp = updater.dispatcher
 dp.add_handler(telegram.MessageHandler(telegram.Filters.all, react_to_message))
 
