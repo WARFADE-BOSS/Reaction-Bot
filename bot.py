@@ -7,7 +7,7 @@ BOT_TOKEN = os.environ['BOT_TOKEN']
 
 reactions = ['👍', '👎', '😂', '🎉', '🤔']
 
-bot = telegram.Bot(token=BOT_TOKEN)
+bot = telegram.Bot(BOT_TOKEN)
 
 def react_to_message(update, context):
     if update.message:
@@ -16,7 +16,7 @@ def react_to_message(update, context):
         reaction = random.choice(reactions)
         bot.send_reaction(chat_id, message_id, reaction)
 
-updater = Updater(token=BOT_TOKEN, use_context=True)
+updater = Updater(BOT_TOKEN, use_context=True)
 dp = updater.dispatcher
 dp.add_handler(telegram.MessageHandler(telegram.Filters.all, react_to_message))
 
