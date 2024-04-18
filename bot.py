@@ -1,6 +1,6 @@
 import os
 import telegram
-from telegram.ext import Updater
+from telegram.ext import Updater, Queue
 import random
 
 BOT_TOKEN = os.environ['BOT_TOKEN']
@@ -16,7 +16,8 @@ def react_to_message(update, context):
         reaction = random.choice(reactions)
         bot.send_reaction(chat_id, message_id, reaction)
 
-updater = Updater(bot=bot)
+update_queue = Queue()
+updater = Updater(bot=bot, update_queue=update_queue)
 dp = updater.dispatcher
 dp.add_handler(telegram.MessageHandler(telegram.Filters.all, react_to_message))
 
