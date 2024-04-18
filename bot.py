@@ -1,7 +1,7 @@
 import os
 import telegram
 import random
-from telegram.ext import Updater
+from telegram.ext import Updater, Dispatcher, MessageHandler, Filters
 
 BOT_TOKEN = os.environ['BOT_TOKEN']
 
@@ -16,9 +16,12 @@ def react_to_message(update, context):
         reaction = random.choice(reactions)
         bot.send_reaction(chat_id, message_id, reaction)
 
-updater = Updater(bot=bot, update_queue=None)
-dispatcher = updater.dispatcher
-dispatcher.add_handler(telegram.MessageHandler(telegram.Filters.all, react_to_message))
+# Initialize the Dispatcher instead of Updater
+dispatcher = Dispatcher(bot, None)
 
-updater.start_polling()
-updater.idle()
+# Add handler to the Dispatcher
+dispatcher.add_handler(MessageHandler(Filters.all, react_to_message))
+
+# Start polling
+dispatcher.start_polling()
+dispatcher.idle()
